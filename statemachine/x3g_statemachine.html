@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType('X3GStatemachine',{
+        category: '3DPrinting',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            printerid:{value:"",required:true}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"X3GStatemachine";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="X3GStatemachine">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-name"><i class="icon-tag"></i> Printer Id</label>
+        <input type="text" id="node-input-printerid" placeholder="For this flow unique id (e.g. 1234 or Printer1, etc)">
+        
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="X3GStatemachine">
+    <p>	This is the statemachine that controlls the printer lalala </p>
+    <h2></h2>
+	<h2>Error</h2>
+	The output msg.payload contains an error message like 
+	<br/> <code>{<br/>
+		"ErrorCode":"1234",<br/>
+		"ErrorMessage":"SomeMessage"<br/>
+		}</br></code>
+	Codes and messages as per below table.</p>
+	<table>
+	<tr>
+		<th>Error Code</th>
+		<th>Message</th>
+	</tr>
+	<tr>
+		<td>001</td>
+		<td>No valid start command found</td>	
+	</tr>
+	<tr>
+		<td>002</td>
+		<td>No valid end of file command found</td>
+	</tr>
+	<tr>
+		<td>003</td>
+		<td>Found unrecognized command {Command Number}</td>		
+	</tr>
+	</table>
+</script>

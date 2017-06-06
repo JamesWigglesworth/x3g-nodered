@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    RED.nodes.registerType('X3GSetwork',{
+        category: '3DPrinting',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"X3GSetwork";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="X3GSetwork">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="X3GSetwork">
+    <p>	This is a parser that implements the X3G/S3G protocol
+	<h2>Input</h2>
+	In case of a successfull parsed input the output will look like this:
+	<br/> <code>{<br/>
+		&nbsp;"name":"Whatever you named it on the input",<br/>
+		&nbsp;"parseddata":[<br/>
+		&nbsp;&nbsp;{ "command":"YYY",<br/>
+		&nbsp;&nbsp;"payload":[{"XX","ZZ"}],<br/>
+		&nbsp;&nbsp;"CRC":"Maxim CRC calculated on payload"}</br>	
+		&nbsp;]<br/>
+		&nbsp;}</br></code>
+	
+	Where YYY is the S3G/X3G command as per the spec in above link
+	XXX is a byte of data and all data is in an array
+	
+	This can then be used to store in a database or send through to the printer component (that can send this immediately to any printer attached to the com port) 
+	<h2>Error</h2>
+	The output msg.payload contains an error message like 
+	<br/> <code>{<br/>
+		"ErrorCode":"1234",<br/>
+		"ErrorMessage":"SomeMessage"<br/>
+		}</br></code>
+	Codes and messages as per below table.</p>
+	<table>
+	<tr>
+		<th>Error Code</th>
+		<th>Message</th>
+	</tr>
+	<tr>
+		<td>001</td>
+		<td>No valid start command found</td>	
+	</tr>
+	<tr>
+		<td>002</td>
+		<td>No valid end of file command found</td>
+	</tr>
+	<tr>
+		<td>003</td>
+		<td>Found unrecognized command {Command Number}</td>		
+	</tr>
+	</table>
+</script>
